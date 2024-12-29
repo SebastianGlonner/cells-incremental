@@ -21,6 +21,10 @@ class UiBridge {
 
     action_buyCell() {
         cellServer.buyCell();
+
+        this.emitUpdate({
+            currentAmountOfCells: cellServer.getCurrentAmountOfCells()
+        });
     }
 }
 
