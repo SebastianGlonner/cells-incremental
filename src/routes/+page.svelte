@@ -42,7 +42,7 @@
 
 <div id="app">
     <div class="cells">
-        <div>Cells: {currentAmountOfCells}</div>
+        <h1 class="underline ">Cells: {currentAmountOfCells}</h1>
         <div>
             <button {onclick}>Buy Cells</button>
         </div>
@@ -57,7 +57,7 @@
     </div> -->
 </div>
 
-<style>
+<style lang="postcss">
     #app {
         width: 100%;
         height: 100%;
