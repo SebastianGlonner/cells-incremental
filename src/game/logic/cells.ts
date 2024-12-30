@@ -1,13 +1,30 @@
-let currentAmountOfCells = 0;
+let cells = 0;
+let cores = 0;
 
-class Server {
-    buyCell() {
-        currentAmountOfCells++;
+export interface CellsData {
+    cells: number;
+    cores: number;
+}
+
+class Controller {
+    tick() {
+        cells += cores;
     }
 
-    getCurrentAmountOfCells() {
-        return currentAmountOfCells;
+    buyCell() {
+        cells++;
+    }
+
+    buyCoreCreator() {
+        cores++;
+    }
+
+    getData(): CellsData {
+        return {
+            cells: cells,
+            cores: cores
+        }
     }
 }
 
-export const cellServer = new Server();
+export default new Controller();

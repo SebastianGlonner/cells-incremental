@@ -1,12 +1,12 @@
 import { Events } from "phaser";
-import { cellServer } from "./cells";
+import cells, { type CellsData } from "./cells";
 
 let uiBridgeBus = new Events.EventEmitter();
 
 export type Listener = (uiData: UiData) => void;
 
 export interface UiData {
-    currentAmountOfCells: number;
+    cells: CellsData;
 }
 
 class UiBridge {
@@ -14,18 +14,21 @@ class UiBridge {
         uiBridgeBus.on('uiUpdate', listener);
     }
 
-    emitUpdate(uiData: UiData) {
-        uiBridgeBus.emit('uiUpdate', uiData);
+    emitUpdate() {
+        uiBridgeBus.emit('uiUpdate', {
+            cells: cells.getData()
+        });
     }
 
 
     action_buyCell() {
-        cellServer.buyCell();
+        cells.buyCell();
+    }
 
-        this.emitUpdate({
-            currentAmountOfCells: cellServer.getCurrentAmountOfCells()
-        });
+
+    action_buyCreator() {
+        cells.buyCoreCreator();
     }
 }
 
-export const uiBridge = new UiBridge();
+export default new UiBridge();
