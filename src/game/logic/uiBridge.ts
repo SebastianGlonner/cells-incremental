@@ -19,16 +19,6 @@ class UiBridge {
             cells: cells.getData()
         });
     }
-
-
-    action_buyCell() {
-        cells.buyCell();
-    }
-
-
-    action_buyCreator() {
-        cells.buyCoreCreator();
-    }
 }
 
 export default new UiBridge();

@@ -2,6 +2,7 @@ import cells from "./cells";
 import uiBridge from "./uiBridge";
 
 let currentTime = Date.now();
+const intervallSpeed = 100;
 const tickTime = 300;
 let tickWaited = 0;
 
@@ -28,7 +29,7 @@ class LoopController {
             }
 
             currentTime = nextTime;
-        }, 100);
+        }, intervallSpeed);
     }
 }
 

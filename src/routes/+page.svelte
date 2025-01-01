@@ -5,6 +5,8 @@
     import uiBridge, { type UiData } from "../game/logic/uiBridge";
     import { onMount } from "svelte";
     import { loopController } from "../game/logic/loop";
+    import type { CellsData } from "../game/logic/cells";
+    import cells from "../game/logic/cells";
 
     onMount(() => {
         loopController.start();
@@ -25,49 +27,53 @@
     // Event emitted from the PhaserGame component
     const currentScene = (scene: Scene) => {};
 
-    let currentAmountOfCells = 0;
+    let cellsData: CellsData = $state({} as CellsData);
 
     uiBridge.onUpdate((uiData: UiData) => {
-        currentAmountOfCells = uiData.cells.cells;
+        cellsData = uiData.cells;
     });
 
     const onclick = () => {
-        uiBridge.action_buyCell();
+        cells.buyCell();
     };
 
-    const buyCreator = () => {
-        uiBridge.action_buyCreator();
+    const buyCore = (index: number) => {
+        cells.buyCore(index);
     };
 </script>
 
-<div id="app">
-    <div class="cells">
-        <div>Cells: {currentAmountOfCells}</div>
-        <div>
-            <button {onclick}>Buy Cells</button>
+<div class="container" style="background-color: #DDD">
+    <div class="fixed-grid has-3-cols">
+        <div class="grid">
+            <div>Cells: {cellsData?.cells}</div>
+            <div></div>
+            <div>
+                <button {onclick} class="button is-primary">Buy Cells</button>
+            </div>
         </div>
+        {#each cellsData?.cores as core, i}
+            <div class="grid">
+                <div>Cores: {core.count}</div>
+                <div>Price: {core.price}</div>
+                <div>
+                    <button
+                        onclick={() => buyCore(i)}
+                        class="button is-primary"
+                        disabled={core.actions.buyable
+                            ? undefined
+                            : true}>Buy Core {i + 1}</button
+                    >
+                </div>
+            </div>
+        {/each}
 
-        <div>
-            <button onclick={buyCreator}>Buy Creator 1</button>
-        </div>
-    </div>
-
-    <!-- <div id="phaserContainer">
+        <!-- <div id="phaserContainer">
         <PhaserGame bind:phaserRef={phaserRef} currentActiveScene={currentScene} />
     </div> -->
+    </div>
 </div>
 
-<style>
-    #app {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .cells {
-        text-align: center;
-    }
-
+<style lang="scss">
     /* #phaserContainer {
         margin-top: 200px;
         height: 400px;
