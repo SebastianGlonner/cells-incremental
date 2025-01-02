@@ -1,64 +1,64 @@
-let cells = 10;
+let cells = 10n;
 let cores: CoreDef[] = [
     {
-        count: 0,
-        cellsPerTick: 1,
-        price: 10,
-        priceMulti: 1.2,
+        count: 0n,
+        cellsPerTick: 1n,
+        price: 10n,
+        priceMulti: 1n,
         actions: {
             buyable: true
         }
     },
     {
-        count: 0,
-        cellsPerTick: 10,
-        price: 1000,
-        priceMulti: 1.2,
+        count: 0n,
+        cellsPerTick: 10n,
+        price: 1000n,
+        priceMulti: 1n,
         actions: {
             buyable: false
         }
     },
     {
-        count: 0,
-        cellsPerTick: 100,
-        price: 100000,
-        priceMulti: 1.2,
+        count: 0n,
+        cellsPerTick: 100n,
+        price: 100000n,
+        priceMulti: 1n,
         actions: {
             buyable: false
         }
     },
-    {
-        count: 0,
-        cellsPerTick: 1000,
-        price: 10000000,
-        priceMulti: 1.2,
-        actions: {
-            buyable: false
-        }
-    },
-    {
-        count: 0,
-        cellsPerTick: 10000,
-        price: 1000000000,
-        priceMulti: 1.2,
-        actions: {
-            buyable: false
-        }
-    }
+    // {
+    //     count: 0,
+    //     cellsPerTick: 1000,
+    //     price: 10000000,
+    //     priceMulti: 1.2,
+    //     actions: {
+    //         buyable: false
+    //     }
+    // },
+    // {
+    //     count: 0,
+    //     cellsPerTick: 10000,
+    //     price: 1000000000,
+    //     priceMulti: 1.2,
+    //     actions: {
+    //         buyable: false
+    //     }
+    // }
 ];
 
 export interface CoreDef {
-    count: number;
-    cellsPerTick: number;
-    price: number;
-    priceMulti: number;
+    count: bigint;
+    cellsPerTick: bigint;
+    price: bigint;
+    priceMulti: bigint;
     actions: {
         buyable: boolean;
     }
 }
 
 export interface CellsData {
-    cells: number;
+    cells: bigint;
 
     cores: CoreDef[];
 }
@@ -90,7 +90,8 @@ class Controller {
 
         cells -= core.price;
 
-        core.price = Math.floor(core.price * core.priceMulti);
+        // core.price = Math.floor(core.price * core.priceMulti);
+        core.price = core.price * core.priceMulti;
 
         return true;
     }

@@ -10,8 +10,12 @@ export interface UiData {
 }
 
 class UiBridge {
+    offUpdate(uiUpdateEvent: Listener) {
+        uiBridgeBus.off('uiUpdate', uiUpdateEvent);
+    }
     onUpdate(listener: Listener) {
         uiBridgeBus.on('uiUpdate', listener);
+        return listener;
     }
 
     emitUpdate() {

@@ -3,10 +3,11 @@
     import type { MainMenu } from "../game/phaser/scenes/MainMenu";
     import PhaserGame, { type TPhaserRef } from "../game/PhaserGame.svelte";
     import uiBridge, { type UiData } from "../game/logic/uiBridge";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { loopController } from "../game/logic/loop";
     import type { CellsData } from "../game/logic/cells";
     import cells from "../game/logic/cells";
+    import fmt from "$lib/fmt";
 
     onMount(() => {
         loopController.start();
@@ -29,7 +30,7 @@
 
     let cellsData: CellsData = $state({} as CellsData);
 
-    uiBridge.onUpdate((uiData: UiData) => {
+    const uiUpdateEvent = uiBridge.onUpdate((uiData: UiData) => {
         cellsData = uiData.cells;
     });
 
@@ -40,12 +41,16 @@
     const buyCore = (index: number) => {
         cells.buyCore(index);
     };
+
+    onDestroy(() => {
+        uiBridge.offUpdate(uiUpdateEvent);
+    });
 </script>
 
 <div class="container" style="background-color: #DDD">
     <div class="fixed-grid has-3-cols">
         <div class="grid">
-            <div>Cells: {cellsData?.cells}</div>
+            <div>Cells: {fmt.bigInt(cellsData?.cells)}</div>
             <div></div>
             <div>
                 <button {onclick} class="button is-primary">Buy Cells</button>
@@ -53,8 +58,8 @@
         </div>
         {#each cellsData?.cores as core, i}
             <div class="grid">
-                <div>Cores: {core.count}</div>
-                <div>Price: {core.price}</div>
+                <div>Cores: {fmt.bigInt(core.count)}</div>
+                <div>Price: {fmt.bigInt(core.price)}</div>
                 <div>
                     <button
                         onclick={() => buyCore(i)}

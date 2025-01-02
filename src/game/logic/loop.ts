@@ -1,14 +1,19 @@
+import automation from "./automation";
 import cells from "./cells";
 import uiBridge from "./uiBridge";
 
 let currentTime = Date.now();
-const intervallSpeed = 100;
-const tickTime = 300;
 let tickWaited = 0;
 
+const intervallSpeed = 1 / 30 * 1000;
+const tickTime = 300;
+
+// const intervallSpeed = 1000;
+// const tickTime = 1300;
 
 const tick = () => {
     cells.tick();
+    automation.tick();
 
     uiBridge.emitUpdate();
 }

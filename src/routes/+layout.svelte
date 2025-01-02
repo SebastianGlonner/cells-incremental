@@ -1,9 +1,20 @@
+<script>
+    import "bulma/bulma.scss";
+    import Navigation from "../components/Navigation.svelte";
+</script>
+
 <svelte:head>
     <title>Phaser Svelte Template</title>
 </svelte:head>
 
-<script>
-    import 'bulma/bulma.scss';
-</script>
+<div class="appLayout">
+    <Navigation></Navigation>
 
-<slot />
+    <slot />
+</div>
+
+<style lang="scss">
+    .appLayout {
+        display: flex;
+    }
+</style>
