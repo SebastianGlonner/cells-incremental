@@ -5,9 +5,9 @@ const fmt = {
 }
 
 class Formatter {
-    bigInt(bigInt: bigint) {
-        if (!bigInt) {
-            return 'NaN';
+    bigInt(bigInt: bigint, defaultsTo = 0) {
+        if (typeof bigInt !== 'bigint') {
+            return defaultsTo;
         }
         if (bigInt < 10000n) {
             return bigInt.toLocaleString(locale);
