@@ -1,5 +1,6 @@
 import automation from "./automation";
 import cells from "./cells";
+import savegame from "./savegame";
 import uiBridge from "./uiBridge";
 
 let currentTime = Date.now();
@@ -16,6 +17,8 @@ const tick = () => {
     automation.tick();
 
     uiBridge.emitUpdate();
+    
+    savegame.doSaveGames();
 }
 
 class LoopController {

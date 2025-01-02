@@ -1,6 +1,7 @@
 <script>
     import "bulma/bulma.scss";
     import Navigation from "../components/Navigation.svelte";
+    import "reflect-metadata";
 </script>
 
 <svelte:head>

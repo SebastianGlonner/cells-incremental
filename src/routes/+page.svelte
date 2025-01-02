@@ -8,6 +8,7 @@
     import type { CellsData } from "../game/logic/cells";
     import cells from "../game/logic/cells";
     import fmt from "$lib/fmt";
+    import {injectable, injectAll} from "tsyringe";
 
     onMount(() => {
         loopController.start();

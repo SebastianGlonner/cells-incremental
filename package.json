@@ -51,6 +51,8 @@
         "@capacitor/cli": "^6.2.0",
         "@capacitor/core": "^6.2.0",
         "bulma": "^1.0.3",
-        "phaser": "^3.87.0"
+        "phaser": "^3.87.0",
+        "reflect-metadata": "^0.2.2",
+        "tsyringe": "^4.8.0"
     }
 }
