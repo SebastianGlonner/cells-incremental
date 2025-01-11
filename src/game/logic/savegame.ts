@@ -12,6 +12,7 @@ const reviver = (key: string, value: any) =>
 export interface SavegameDataHandler<T> {
     getSavegameData(): T;
     loadSavegameData(data: T): void;
+    loadDefaultSavegameData(): void;
 }
 
 export default new class {
@@ -27,22 +28,37 @@ export default new class {
     }
 
     async saveAll() {
-        this.handler.entries().forEach(async ([name, handler]) => {
-            await Preferences.set({
-                key: name,
-                value: JSON.stringify(handler.getSavegameData())
-            });
-        });
+        const entries = this.handler.entries().toArray();
+        for (let i = 0; i < entries.length; i++) {
+            await this.saveSingle(entries[i]);
+        }
     }
 
     async loadAll() {
-        this.handler.entries().forEach(async ([name, handler]) => {
-            const dataString = await Preferences.get({key: name});
+        const entries = this.handler.entries().toArray();
+        for (let i = 0; i < entries.length; i++) {
+            await this.loadSingle(entries[i]);
+        }
 
-            if (typeof dataString.value === 'string') {
-                handler.loadSavegameData(JSON.parse(dataString.value, reviver));
-            }
+    }
+
+    private async saveSingle(entry: [string, SavegameDataHandler<any>]) {
+        const [name, handler] = entry;
+        await Preferences.set({
+            key: name,
+            value: JSON.stringify(handler.getSavegameData())
         });
+    }
+
+    private async loadSingle(entry: [string, SavegameDataHandler<any>]) {
+        const [name, handler] = entry;
+        const dataString = await Preferences.get({key: name});
+        if (typeof dataString.value === 'string') {
+            handler.loadSavegameData(JSON.parse(dataString.value, reviver));
+        } else {
+            console.log('load default: ', name)
+            handler.loadDefaultSavegameData();
+        }
 
     }
 }

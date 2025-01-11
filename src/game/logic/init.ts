@@ -1,4 +1,5 @@
 import cells from "./cells";
+import gameConfig from "./gameConfig";
 import loop from "./loop";
 import savegame from "./savegame";
 
@@ -8,12 +9,13 @@ bigIntPrototype.toJSON = function() {
     return { $bigint: this.toString() };
 }
 
-export default function() {
+export default async function() {
     registerSavegameDataHandler();
-    savegame.loadAll();
+    await savegame.loadAll();
+
+    setupSaveGameIntervall();
 
     registerTicker();
-
     loop.start();
 }
 
@@ -23,4 +25,12 @@ function registerTicker() {
 
 function registerSavegameDataHandler() {
     savegame.addProvider('cells', cells);
+    savegame.addProvider('gameConfig', gameConfig);
+}
+
+function setupSaveGameIntervall() {
+    console.log('setupSaveGameIntervall');
+    setInterval(() => {
+        savegame.saveAll();
+    }, gameConfig.configData.savegameIntervall)
 }

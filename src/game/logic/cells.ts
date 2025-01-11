@@ -123,4 +123,7 @@ export default new class implements SavegameDataHandler<CellsData>, GameTicker {
     loadSavegameData(data: CellsData): void {
         cellsData = data;
     }
+    loadDefaultSavegameData() {
+        
+    }
 }
