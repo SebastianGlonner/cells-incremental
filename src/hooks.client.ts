@@ -1,10 +1,3 @@
-import savegame from "./game/logic/savegame";
+import init from "./game/logic/init";
 
-const bigIntPrototype = BigInt.prototype as any;
-bigIntPrototype.toJSON = function() {
-    return { $bigint: this.toString() };
-}
-
-export const init = () => {
-    savegame.loadAll();
-}
+init();

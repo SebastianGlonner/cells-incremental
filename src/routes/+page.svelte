@@ -4,14 +4,10 @@
     import PhaserGame, { type TPhaserRef } from "../game/PhaserGame.svelte";
     import uiBridge, { type UiData } from "../game/logic/uiBridge";
     import { onDestroy, onMount } from "svelte";
-    import { loopController } from "../game/logic/loop";
+    import loop from "../game/logic/loop";
     import type { CellsData } from "../game/logic/cells";
     import cells from "../game/logic/cells";
     import fmt from "$lib/fmt";
-
-    onMount(() => {
-        loopController.start();
-    });
 
     //  References to the PhaserGame component (game and scene are exposed)
     let phaserRef: TPhaserRef = { game: null, scene: null };

@@ -1,3 +1,5 @@
+import type { GameTicker } from "./loop";
+import loop from "./loop";
 import type { SavegameDataHandler } from "./savegame";
 
 let cellsData: CellsData = {
@@ -71,8 +73,8 @@ export interface CellsData {
     cores: CoreDef[];
 }
 
-class Controller implements SavegameDataHandler<CellsData> {
-    tick() {
+export default new class implements SavegameDataHandler<CellsData>, GameTicker {
+    onTick() {
         cellsData.cores.forEach(core => {
             if (core.count > 0) {
                 cellsData.cells += core.count * core.cellsPerTick;
@@ -119,9 +121,6 @@ class Controller implements SavegameDataHandler<CellsData> {
         return this.getData();
     }
     loadSavegameData(data: CellsData): void {
-        console.log('init client', data);
         cellsData = data;
     }
 }
-
-export default new Controller();

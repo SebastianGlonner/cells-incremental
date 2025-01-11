@@ -14,13 +14,9 @@ export interface SavegameDataHandler<T> {
     loadSavegameData(data: T): void;
 }
 
-class SavegameController {
+export default new class {
 
     private handler: Map<string, SavegameDataHandler<any>> = new Map();
-
-    constructor() {
-        this.addProvider('cells', cells);
-    }
 
     addProvider(name: string, handler: SavegameDataHandler<any>) {
         if (this.handler.get(name)) {
@@ -50,5 +46,3 @@ class SavegameController {
 
     }
 }
-
-export default new SavegameController;
