@@ -50,6 +50,7 @@
         "@capacitor/android": "^6.2.0",
         "@capacitor/cli": "^6.2.0",
         "@capacitor/core": "^6.2.0",
+        "@capacitor/preferences": "^6.0.3",
         "bulma": "^1.0.3",
         "phaser": "^3.87.0"
     }

@@ -1,7 +1,11 @@
 <script lang="ts">
+    import savegame from "../game/logic/savegame";
+
 
     
-
+    const onclick = () => {
+        savegame.saveAll();
+    }
 </script>
 
 <aside class="menu">
@@ -10,10 +14,12 @@
         <li><a href="/">Cells</a></li>
         <li><a href="/research">Research</a></li>
     </ul>
-    <p class="menu-label">Transactions</p>
+    <hr />
     <ul class="menu-list">
         <li><a href="/stats">Stats</a></li>
     </ul>
+    <hr />
+    <button class="button" {onclick}>SaveGame</button>
 </aside>
 
 <style lang="scss">
