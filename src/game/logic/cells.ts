@@ -1,9 +1,10 @@
 import type { GameTicker } from "./loop";
 import loop from "./loop";
 import type { SavegameDataHandler } from "./savegame";
+import createTracingProxy from "./tracer";
 
 let cellsData: CellsData = {
-    cells: 10n,
+    cells: 1000n,
     cores: [
         {
             count: 0n,
@@ -73,7 +74,7 @@ export interface CellsData {
     cores: CoreDef[];
 }
 
-export default new class implements SavegameDataHandler<CellsData>, GameTicker {
+const t = new class implements SavegameDataHandler<CellsData>, GameTicker {
     onTick() {
         cellsData.cores.forEach(core => {
             if (core.count > 0) {
@@ -127,3 +128,6 @@ export default new class implements SavegameDataHandler<CellsData>, GameTicker {
         
     }
 }
+
+
+export default createTracingProxy(t, ['buyCore']);

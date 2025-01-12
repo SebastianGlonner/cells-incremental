@@ -56,7 +56,6 @@ export default new class {
         if (typeof dataString.value === 'string') {
             handler.loadSavegameData(JSON.parse(dataString.value, reviver));
         } else {
-            console.log('load default: ', name)
             handler.loadDefaultSavegameData();
         }
 

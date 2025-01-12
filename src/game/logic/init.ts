@@ -17,6 +17,8 @@ export default async function() {
 
     registerTicker();
     loop.start();
+
+    
 }
 
 function registerTicker() {
@@ -29,7 +31,6 @@ function registerSavegameDataHandler() {
 }
 
 function setupSaveGameIntervall() {
-    console.log('setupSaveGameIntervall');
     setInterval(() => {
         savegame.saveAll();
     }, gameConfig.configData.savegameIntervall)

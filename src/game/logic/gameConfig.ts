@@ -17,7 +17,6 @@ export default new class implements SavegameDataHandler<ConfigSaveData> {
         return this.configData;
     }
     loadSavegameData(data: ConfigSaveData): void {
-        console.log('load savegame');
         this.configData = data;
     }
     loadDefaultSavegameData() {
