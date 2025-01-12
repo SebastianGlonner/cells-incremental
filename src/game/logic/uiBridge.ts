@@ -1,5 +1,6 @@
 import { Events } from "phaser";
-import cells, { type CellsData } from "./cells";
+import type { CellsData } from "./cells.class";
+import { cells } from "./constructions";
 
 let uiBridgeBus = new Events.EventEmitter();
 

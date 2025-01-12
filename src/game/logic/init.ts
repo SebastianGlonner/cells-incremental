@@ -1,6 +1,5 @@
-import cells from "./cells";
+import { cells, loop } from "./constructions";
 import gameConfig from "./gameConfig";
-import loop from "./loop";
 import savegame from "./savegame";
 
 
@@ -21,6 +20,10 @@ export default async function() {
     
 }
 
+function constructStuff() {
+
+}
+
 function registerTicker() {
     loop.registerTicker(cells);
 }
@@ -31,6 +34,10 @@ function registerSavegameDataHandler() {
 }
 
 function setupSaveGameIntervall() {
+    if (!gameConfig.configData.savegameIntervall) {
+        return;
+    }
+
     setInterval(() => {
         savegame.saveAll();
     }, gameConfig.configData.savegameIntervall)

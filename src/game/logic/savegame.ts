@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
-import cells from './cells';
+import cells from './cells.class';
 
 const reviver = (key: string, value: any) =>
     value !== null &&

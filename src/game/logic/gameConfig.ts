@@ -6,7 +6,7 @@ interface ConfigSaveData {
 }
 
 export const defaultGameConfig: ConfigSaveData = {
-    savegameIntervall: 5000,
+    savegameIntervall: 0,
 }
 
 export default new class implements SavegameDataHandler<ConfigSaveData> {

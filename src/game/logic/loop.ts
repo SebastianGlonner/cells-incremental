@@ -1,6 +1,3 @@
-import { tick } from "svelte";
-import automation from "./automation";
-import cells from "./cells";
 import uiBridge from "./uiBridge";
 
 
@@ -18,7 +15,7 @@ export interface GameTicker {
     onTick(): void;
 }
 
-export default new class {
+export default class {
     //#####
     // config
     //#####
