@@ -9,7 +9,7 @@ export const defaultGameConfig: ConfigSaveData = {
     savegameIntervall: 0,
 }
 
-export default new class implements SavegameDataHandler<ConfigSaveData> {
+export default class GameConfig implements SavegameDataHandler<ConfigSaveData> {
 
     configData: ConfigSaveData;
 

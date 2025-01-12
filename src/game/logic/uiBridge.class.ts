@@ -1,6 +1,7 @@
 import { Events } from "phaser";
 import type { CellsData } from "./cells.class";
-import { cells } from "./constructions";
+import container from "./container";
+import Cells from "./cells.class";
 
 let uiBridgeBus = new Events.EventEmitter();
 
@@ -10,7 +11,9 @@ export interface UiData {
     cells: CellsData;
 }
 
-class UiBridge {
+export default class UiBridge {
+    constructor(private cells: Cells) {
+    }
     offUpdate(uiUpdateEvent: Listener) {
         uiBridgeBus.off('uiUpdate', uiUpdateEvent);
     }
@@ -21,9 +24,7 @@ class UiBridge {
 
     emitUpdate() {
         uiBridgeBus.emit('uiUpdate', {
-            cells: cells.getData()
+            cells: this.cells.getData()
         });
     }
 }
-
-export default new UiBridge();

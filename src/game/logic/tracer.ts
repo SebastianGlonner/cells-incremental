@@ -21,7 +21,7 @@ function traceMethodCalls(obj: any, className: string, propertyName: string) {
     return new Proxy(obj, handler);    
 }
 
-export default function createTracingProxy<T extends Class, K extends keyof T>(obj: T, properties: K[]): T {  
+export default function createTracingProxy<T extends { new(): T }, K extends keyof T>(obj: T, properties: K[]): T {  
     if (!enabled) {
         return obj;
     }

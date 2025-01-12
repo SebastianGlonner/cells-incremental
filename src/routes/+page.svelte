@@ -2,11 +2,23 @@
     import type { Scene } from "phaser";
     import type { MainMenu } from "../game/phaser/scenes/MainMenu";
     import PhaserGame, { type TPhaserRef } from "../game/PhaserGame.svelte";
-    import uiBridge, { type UiData } from "../game/logic/uiBridge";
+    import UiBridge, { type UiData } from "../game/logic/uiBridge.class";
     import { onDestroy, onMount } from "svelte";
-    import type { CellsData } from "../game/logic/Cells";
+    import type { CellsData } from "../game/logic/Cells.class";
     import fmt from "$lib/fmt";
-    import { cells } from "../game/logic/constructions";
+    import Cells from "../game/logic/cells.class";
+    import container from "../game/logic/container";
+
+    let cells: Cells;
+    let uiBridge: UiBridge;
+    let uiUpdateEvent: any;
+    onMount(() => {
+        cells = container.resolve(Cells);
+        uiBridge = container.resolve(UiBridge);
+        uiUpdateEvent = uiBridge.onUpdate((uiData: UiData) => {
+            cellsData = uiData.cells;
+        });
+    });
 
     //  References to the PhaserGame component (game and scene are exposed)
     let phaserRef: TPhaserRef = { game: null, scene: null };
@@ -24,10 +36,6 @@
     const currentScene = (scene: Scene) => {};
 
     let cellsData: CellsData = $state({} as CellsData);
-
-    const uiUpdateEvent = uiBridge.onUpdate((uiData: UiData) => {
-        cellsData = uiData.cells;
-    });
 
     const onclick = () => {
         cells.buyCell();
@@ -59,9 +67,8 @@
                     <button
                         onclick={() => buyCore(i)}
                         class="button is-primary"
-                        disabled={core.actions.buyable
-                            ? undefined
-                            : true}>Buy Core {i + 1}</button
+                        disabled={core.actions.buyable ? undefined : true}
+                        >Buy Core {i + 1}</button
                     >
                 </div>
             </div>

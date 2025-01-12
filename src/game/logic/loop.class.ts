@@ -1,11 +1,12 @@
-import uiBridge from "./uiBridge";
+import type UiBridge from "./uiBridge.class";
+import uiBridge from "./uiBridge.class";
 
 
 const loopConfig = new class {
     intervallSpeed = 1 / 30 * 1000; // 30 updates per second
     gameTickTime = 1000; // 1 second
 
-    
+
     // dev values
     // intervallSpeed = 1000; // 30 updates per second
     // gameTickTime = 300; // 1 second
@@ -15,7 +16,7 @@ export interface GameTicker {
     onTick(): void;
 }
 
-export default class {
+export default class Loop {
     //#####
     // config
     //#####
@@ -27,11 +28,16 @@ export default class {
     //#####
     private currentTime: number;
     private tickWaited: number;
-    private tickers: {(): void}[] = []; // array of functions
+    private tickers: { (): void }[] = []; // array of functions
+
+    constructor(private uiBridge: UiBridge) {
+
+    }
+
     start() {
         this.currentTime = Date.now();
         this.tickWaited = 0;
-        
+
         this.intervallSpeed = loopConfig.intervallSpeed;
         this.gameTickTime = loopConfig.gameTickTime;
 
@@ -52,7 +58,7 @@ export default class {
 
         this.currentTime = nextTime;
 
-        uiBridge.emitUpdate();
+        this.uiBridge.emitUpdate();
     }
 
     doGameTicks() {

@@ -1,4 +1,4 @@
-import type { GameTicker } from "./Loop";
+import type { GameTicker } from "./loop.class";
 import type { SavegameDataHandler } from "./savegame";
 
 let cellsData: CellsData = {

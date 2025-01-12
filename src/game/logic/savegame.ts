@@ -19,12 +19,15 @@ export default new class {
 
     private handler: Map<string, SavegameDataHandler<any>> = new Map();
 
-    addProvider(name: string, handler: SavegameDataHandler<any>) {
-        if (this.handler.get(name)) {
+    addProvider(handler: SavegameDataHandler<any>) {
+        if (!handler.constructor.name) {
+            throw 'SavegameDataHandler has no constructor name';
+        }
+        if (this.handler.get(handler.constructor.name)) {
             throw new Error('Duplicate save game handler name')
         }
 
-        this.handler.set(name, handler);
+        this.handler.set(handler.constructor.name, handler);
     }
 
     async saveAll() {
