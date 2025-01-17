@@ -1,16 +1,21 @@
 <script>
     import "bulma/bulma.scss";
-    import Navigation from "../components/Navigation.svelte";
+    import Navigation from "$lib/components/Navigation.svelte";
+    import TopBar from "$lib/components/TopBar.svelte";
+
+    let { children } = $props();
 </script>
 
 <svelte:head>
     <title>Phaser Svelte Template</title>
 </svelte:head>
 
+
+<TopBar></TopBar>
 <div class="appLayout">
     <Navigation></Navigation>
 
-    <slot />
+    {@render children()}
 </div>
 
 <style lang="scss">

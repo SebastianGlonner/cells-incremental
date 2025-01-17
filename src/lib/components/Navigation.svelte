@@ -1,5 +1,5 @@
 <script lang="ts">
-    import savegame from "../game/logic/savegame";
+    import savegame from "../../game/logic/savegame";
 
 
     

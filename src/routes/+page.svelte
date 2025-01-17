@@ -4,9 +4,8 @@
     import PhaserGame, { type TPhaserRef } from "../game/PhaserGame.svelte";
     import UiBridge, { type UiData } from "../game/logic/uiBridge.class";
     import { onDestroy, onMount } from "svelte";
-    import type { CellsData } from "../game/logic/Cells.class";
     import fmt from "$lib/fmt";
-    import Cells from "../game/logic/cells.class";
+    import Cells, { type CellsData } from "../game/logic/cells.class";
     import container from "../game/logic/container";
 
     let cells: Cells;
