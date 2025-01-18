@@ -1,35 +1,38 @@
+import { Big, BigDecimal } from "bigdecimal.js";
 import type { GameTicker } from "./loop.class";
 import type { SavegameDataHandler } from "./savegame";
 
+
+
 let cellsData: CellsData = {
-    cells: 1000n,
+    cells: Big(66777749999999999999999999999999999999999999999999999999999999999986363735n),
     cores: [
         {
-            count: 0n,
-            cellsPerTick: 1n,
-            price: 10n,
-            ascensionAt: 10n,
-            priceMulti: 10n,
+            count: Big(0),
+            cellsPerTick: Big(1),
+            price: Big(1),
+            ascensionAt: Big(10),
+            priceMulti: Big(10),
             actions: {
                 buyable: true
             }
         },
         {
-            count: 0n,
-            cellsPerTick: 10n,
-            price: 1000n,
-            ascensionAt: 10n,
-            priceMulti: 10n,
+            count: Big(0),
+            cellsPerTick: Big(10),
+            price: Big(100),
+            ascensionAt: Big(10),
+            priceMulti: Big(10),
             actions: {
                 buyable: false
             }
         },
         {
-            count: 0n,
-            cellsPerTick: 100n,
-            price: 100000n,
-            ascensionAt: 10n,
-            priceMulti: 10n,
+            count: Big(0),
+            cellsPerTick: Big(100),
+            price: Big(10000),
+            ascensionAt: Big(10),
+            priceMulti: Big(10),
             actions: {
                 buyable: false
             }
@@ -55,28 +58,33 @@ let cellsData: CellsData = {
     ]
 }
 
+cellsData.cores.forEach(core => {
+    core.cellsPerTick = core.cellsPerTick.multiply(10000000000000000230000000000000541000000000000123000000152000050000n);
+});
+
 export interface CoreDef {
-    count: bigint;
-    cellsPerTick: bigint;
-    price: bigint;
-    ascensionAt: bigint;
-    priceMulti: bigint;
+    count: BigDecimal;
+    cellsPerTick: BigDecimal;
+    price: BigDecimal;
+    ascensionAt: BigDecimal;
+    priceMulti: BigDecimal;
     actions: {
         buyable: boolean;
     }
 }
 
 export interface CellsData {
-    cells: bigint;
+    cells: BigDecimal;
 
     cores: CoreDef[];
 }
 
 export default class Cells implements SavegameDataHandler<CellsData>, GameTicker {
     onTick() {
+        const t = Big(1).add(3);
         cellsData.cores.forEach(core => {
-            if (core.count > 0) {
-                cellsData.cells += core.count * core.cellsPerTick;
+            if (core.count.greaterThan(0)) {
+                cellsData.cells = cellsData.cells.add(core.count.multiply(core.cellsPerTick));
 
             }
 
@@ -85,7 +93,7 @@ export default class Cells implements SavegameDataHandler<CellsData>, GameTicker
     }
 
     buyCell() {
-        cellsData.cells++;
+        cellsData.cells = cellsData.cells.add(1);
     }
 
     buyCore(index: number): boolean {
@@ -95,21 +103,21 @@ export default class Cells implements SavegameDataHandler<CellsData>, GameTicker
             return false;
         }
 
-        core.count++;
+        core.count = core.count.add(1);
 
-        cellsData.cells -= core.price;
+        cellsData.cells = cellsData.cells.subtract(core.price);
 
-        if (core.count % core.ascensionAt === 0n) {
-            // core.price = Math.floor(core.price * core.priceMulti);
-            core.price = core.price * core.priceMulti;
-            core.cellsPerTick *= 2n;
-        }
+        // if (core.count % core.ascensionAt === 0n) {
+        //     // core.price = Math.floor(core.price * core.priceMulti);
+        //     core.price = core.price * core.priceMulti;
+        //     core.cellsPerTick *= 2n;
+        // }
 
         return true;
     }
 
     private canBuyCore(core: CoreDef) {
-        return core.price <= cellsData.cells;
+        return core.price.lowerThanOrEquals(cellsData.cells);
     }
 
     getData(): CellsData {

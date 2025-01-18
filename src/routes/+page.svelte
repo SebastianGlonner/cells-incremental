@@ -52,7 +52,7 @@
 <div class="container" style="background-color: #DDD">
     <div class="fixed-grid has-3-cols">
         <div class="grid">
-            <div>Cells: {fmt.bigInt(cellsData?.cells)}</div>
+            <div>Cells: {fmt.bigDecimal(cellsData?.cells)}</div>
             <div></div>
             <div>
                 <button {onclick} class="button is-primary">Buy Cells</button>
@@ -60,8 +60,8 @@
         </div>
         {#each cellsData?.cores as core, i}
             <div class="grid">
-                <div>Cores: {fmt.bigInt(core.count)}</div>
-                <div>Price: {fmt.bigInt(core.price)}</div>
+                <div>Cores: {fmt.bigDecimal(core.count)}</div>
+                <div>Price: {fmt.bigDecimal(core.price)}</div>
                 <div>
                     <button
                         onclick={() => buyCore(i)}

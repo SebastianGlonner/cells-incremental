@@ -1,12 +1,25 @@
 import { Preferences } from '@capacitor/preferences';
 import cells from './cells.class';
+import { Big, BigDecimal } from 'bigdecimal.js';
+
+
+// const bigIntPrototype = BigInt.prototype as any;
+// bigIntPrototype.toJSON = function() {
+//     return { $bigint: this.toString() };
+// }
+
+const bigDecimalPrototype = BigDecimal.prototype as any;
+bigDecimalPrototype.toJSON = function() {
+    console.log('toJson bigdecimal')
+    return { $bigDecimal: this.toString() };
+}
 
 const reviver = (key: string, value: any) =>
     value !== null &&
     typeof value === "object" &&
-    "$bigint" in value &&
-    typeof value.$bigint === "string"
-      ? BigInt(value.$bigint)
+    "$bigDecimal" in value &&
+    typeof value.$bigDecimal === "string"
+      ? Big(value.$bigDecimal)
       : value;
 
 export interface SavegameDataHandler<T> {

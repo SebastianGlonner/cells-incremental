@@ -1,18 +1,23 @@
-const locale = 'en-US';
-const fmt = {
-    notation: 'scientific',
-    maximumFactionDigits: 3
-}
+import { Big, type BigDecimal } from "bigdecimal.js";
 
 class Formatter {
-    bigInt(bigInt: bigint, defaultsTo = 0) {
-        if (typeof bigInt !== 'bigint') {
+    private locale = 'en-US';
+    // private locale = 'de-DE';
+    private fmt: BigIntToLocaleStringOptions = {
+        notation: 'scientific',
+        maximumFractionDigits: 3,
+        minimumFractionDigits: 3,
+        // minimumSignificantDigits: 4,
+        // maximumSignificantDigits: 4
+    };
+    bigDecimal(bigInt: BigDecimal, defaultsTo = 0) {
+        if (!bigInt) {
             return defaultsTo;
         }
-        if (bigInt < 10000n) {
-            return bigInt.toLocaleString(locale);
+        if (bigInt.lt(1000)) {
+            return bigInt.toBigInt().toLocaleString(this.locale);
         }
-        return bigInt.toLocaleString(locale, fmt);
+        return bigInt.toBigInt().toLocaleString(this.locale, this.fmt);
     }
 }
 
