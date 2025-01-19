@@ -7,6 +7,8 @@
     import fmt from "$lib/fmt";
     import Cells, { type CellsData } from "../game/logic/cells.class";
     import container from "../game/logic/container";
+    import LayoutGrid, { Cell } from "@smui/layout-grid";
+    import Button from "@smui/button";
 
     let cells: Cells;
     let uiBridge: UiBridge;
@@ -50,33 +52,37 @@
 </script>
 
 <div class="container" style="background-color: #DDD">
-    <div class="fixed-grid has-3-cols">
-        <div class="grid">
-            <div>Cells: {fmt.bigDecimal(cellsData?.cells)}</div>
-            <div></div>
-            <div>
-                <button {onclick} class="button is-primary">Buy Cells</button>
-            </div>
-        </div>
-        {#each cellsData?.cores as core, i}
-            <div class="grid">
-                <div>Cores: {fmt.bigDecimal(core.count)}</div>
-                <div>Price: {fmt.bigDecimal(core.price)}</div>
-                <div>
-                    <button
-                        onclick={() => buyCore(i)}
-                        class="button is-primary"
-                        disabled={core.actions.buyable ? undefined : true}
-                        >Buy Core {i + 1}</button
-                    >
-                </div>
-            </div>
-        {/each}
+    <LayoutGrid>
+        <Cell span={3}>
+            Cells: {fmt.bigDecimal(cellsData?.cells)}
+        </Cell>
+        <Cell span={1}>
+            <Button {onclick} class="button is-primary" touch variant="raised"
+                >Buy Cells
+            </Button>
+        </Cell>
+    </LayoutGrid>
 
-        <!-- <div id="phaserContainer">
+    <LayoutGrid>
+        {#each cellsData?.cores as core, i}
+            <Cell span={3}>
+                Cores: {fmt.bigDecimal(core.count)}<br />
+                Price: {fmt.bigDecimal(core.price)}
+            </Cell>
+            <Cell span={1}>
+                <Button
+                    onclick={() => buyCore(i)}
+                    touch variant="raised"
+                    disabled={core.actions.buyable ? undefined : true}
+                    >Buy Core {i + 1}
+                </Button>
+            </Cell>
+        {/each}
+    </LayoutGrid>
+
+    <!-- <div id="phaserContainer">
         <PhaserGame bind:phaserRef={phaserRef} currentActiveScene={currentScene} />
     </div> -->
-    </div>
 </div>
 
 <style lang="scss">

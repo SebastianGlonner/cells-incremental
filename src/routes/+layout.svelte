@@ -1,7 +1,8 @@
 <script>
-    import "bulma/bulma.scss";
+    import "../app.css";
     import Navigation from "$lib/components/Navigation.svelte";
     import TopBar from "$lib/components/TopBar.svelte";
+    import DevPanel from "$lib/components/DevPanel.svelte";
 
     let { children } = $props();
 </script>
@@ -15,11 +16,19 @@
 <div class="appLayout">
     <Navigation></Navigation>
 
-    {@render children()}
+    <div class="content">
+        {@render children()}
+    </div>
+
+    <DevPanel></DevPanel>
 </div>
 
 <style lang="scss">
     .appLayout {
         display: flex;
+    }
+
+    .content {
+        flex-grow: 1;
     }
 </style>

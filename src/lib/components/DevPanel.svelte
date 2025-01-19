@@ -1,15 +1,22 @@
 <script lang="ts">
-    import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
-    import IconButton from '@smui/icon-button';
+    import { mdiTimeline } from "@mdi/js";
+    import Fab, { Icon } from '@smui/fab';
 
+    const onclick = () => {
+        
+    }
 </script>
 
-<div>TODO</div>>
+<div class="container">
+    <Fab {onclick}>
+        <Icon tag="svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d={mdiTimeline} />
+        </Icon>
+    </Fab>
+</div>
 
 <style lang="scss">
-    /* #phaserContainer {
-        margin-top: 200px;
-        height: 400px;
-        width: 400px;
-    } */
+    .container {
+        width: 60px;
+    }
 </style>
